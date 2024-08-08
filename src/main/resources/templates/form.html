@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UFT-8" />
+    <title th:text="${titulo}"></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+</head>
+<body>
+    <h1 th:text="${title}"></h1>
+    <form th:action="@{/form}" th:object="${client}" method="post">
+        <table>
+             <tr>
+                <td>Name</td>
+                <td><input type="text" th:field="*{name}"/></td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td><input type="text" th:field="*{lastName}"/></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="text" th:field="*{email}"/> </td>
+            </tr>
+            <tr>          
+                <td>Date</td>
+                <td><input type="text" th:field="*{createAt}" /> </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Create client"/> </td>
+            </tr>
+        </table>
+        <input type="hidden" th:field="*{id}"/>
+    </form>
+
+</body>
+
+</html>
