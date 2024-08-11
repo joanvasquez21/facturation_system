@@ -36,6 +36,8 @@
 					<th>last name</th>
 					<th>email</th>
 					<th>date</th>
+					<th>edit</th>
+					<th>delete</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -45,6 +47,8 @@
 					<td th:text="${client.lastName}"></td>
 					<td th:text="${client.email}"></td>
 					<td th:text="${client.createAt}"></td>
+					<td><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${client.id}">Edit</a></td>
+					<td><a class="btn btn-danger btn-xs" th:href="@{/delete/} + ${client.id}">Delete</a></td>
 				</tr>
 
 			</tbody>

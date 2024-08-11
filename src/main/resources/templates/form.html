@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UFT-8" />
-    <title th:text="${titulo}"></title>
+    <title th:text="${title}"></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 </head>
@@ -13,19 +13,23 @@
         <table>
              <tr>
                 <td>Name</td>
-                <td><input type="text" th:field="*{name}"/></td>
+                <td><input type="text" th:field="*{name}" th:errorclass="'form-control alert-danger'"/></td>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">This field can't be empty</small>
             </tr>
             <tr>
                 <td>Last Name</td>
-                <td><input type="text" th:field="*{lastName}"/></td>
+                <td><input type="text" th:field="*{lastName}" th:errorclass="'form-control alert-danger'"/></td>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">This field can't be empty </small>
             </tr>
             <tr>
                 <td>Email</td>
-                <td><input type="text" th:field="*{email}"/> </td>
+                <td><input type="text" th:field="*{email}" th:errorclass="'form-control alert-danger'"/> </td>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">This field can't be empty</small>
             </tr>
             <tr>          
                 <td>Date</td>
-                <td><input type="text" th:field="*{createAt}" /> </td>
+                <td><input type="text" th:field="*{createAt}" th:errorclass="'form-control alert-danger'" /> </td>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}">This fiel can't be empty</small>
             </tr>
             <tr>
                 <td><input type="submit" value="Create client"/> </td>

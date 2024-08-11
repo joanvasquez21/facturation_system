@@ -32,7 +32,7 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty
+	@NotEmpty(message = "{NotEmpty.client.name}")
 	private String name;
 
 	@NotEmpty
