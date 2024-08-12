@@ -1,17 +1,9 @@
 package com.springboot.app.models.dao;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.springboot.app.models.entity.Client; 
 
-public interface IClientDao { 
-	
-	public List<Client> findAll();
-
-	public void save(Client client);
-
-	public Client findOneClient(Long id);
-
-	public void deleteClient(Long id);
+public interface IClientDao extends JpaRepository<Client, Long> { 
 
 }
