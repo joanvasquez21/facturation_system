@@ -36,6 +36,7 @@ public class Client implements Serializable {
 	private String name;
 
 	@NotEmpty
+	@Column(name="lastname")
 	private String lastName;
 
 	@NotEmpty

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springboot.app.models.entity.Client;
 import com.springboot.app.models.service.IClientService;
+import com.springboot.app.util.paginator.PageRender;
 
 import jakarta.validation.Valid;
 
@@ -34,8 +35,10 @@ public class ClientController {
 		Pageable pageRequest = PageRequest.of(page, 4);
 		Page<Client> clients = clientService.findAll(pageRequest);
 	
+		PageRender<Client> pageRender = new PageRender<>("/list", clients);
 		model.addAttribute("title", "Client list");
 		model.addAttribute("clients", clients);
+		model.addAttribute("page", pageRender);
 		return "listClients";
 	}
 

@@ -13,42 +13,39 @@
 		.container {
 			margin-top: 20px;
 		}
-		.user-card {
-			background-color: #ffffff;
-			border: 1px solid #e3e6f0;
-			border-radius: 10px;
-			padding: 15px;
-			margin-bottom: 10px;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+		table {
+			width: 100%;
+			border-collapse: collapse;
 		}
-		.user-card h5 {
-			margin: 0;
-			font-weight: 600;
+		th, td {
+			padding: 12px;
+			text-align: left;
+			border-bottom: 1px solid #dee2e6;
+		}
+		th {
+			background-color: #f8f9fa;
+			font-weight: bold;
+			color: #495057;
+			box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+		}
+		td {
 			color: #343a40;
 		}
-		.user-actions {
+		.actions {
 			display: flex;
-			gap: 10px;
+			justify-content: space-around;
+			color: #495057;
 		}
-		.btn-edit, .btn-delete {
-			background-color: transparent;
-			color: #6c757d;
-			border: none;
-			padding: 5px 10px;
-			border-radius: 8px;
-			display: flex;
-			align-items: center;
-			transition: background-color 0.2s, color 0.2s;
+		.actions a {
+			color: #495057;
+			text-decoration: none;
+			padding: 5px;
+			border-radius: 4px;
+			transition: background-color 0.3s, color 0.3s;
 		}
-		.btn-edit:hover, .btn-delete:hover {
+		.actions a:hover {
 			background-color: #e9ecef;
 			color: #000;
-		}
-		.btn-edit i, .btn-delete i {
-			margin-right: 0;
 		}
 		.btn-create {
 			background-color: #000000;
@@ -58,8 +55,9 @@
 			border-radius: 8px;
 			margin-bottom: 15px;
 			display: inline-block;
-			align-self: flex-end;
 			margin-left: auto;
+			text-decoration: none;
+			transition: background-color 0.3s;
 		}
 		.btn-create:hover {
 			background-color: #343a40;
@@ -70,20 +68,40 @@
 <body>
 	<div class="container">
 		<div style="display: flex; justify-content: space-between; align-items: center;">
-			<h2>Users</h2>
-			<a th:href="@{/form}" class="btn-create">Create User</a>
+			<h2>Customer list and invoice creation</h2>
+			<a th:href="@{/form}" class="btn-create">Create user</a>
 		</div>
-		<div th:each="client : ${clients}" class="user-card">
-			<h5 th:text="${client.name} + ' ' + ${client.lastName}">John Doe</h5>
-			<div class="user-actions">
-				<a th:href="@{/form/} + ${client.id}" class="btn-edit">
-					<i class="fas fa-pencil-alt"></i>
-				</a>
-				<a th:href="@{/delete/} + ${client.id}" class="btn-delete">
-					<i class="fas fa-trash-alt"></i>
-				</a>
-			</div>
-		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>name</th>
+					<th>lastname</th>
+					<th>email</th>
+					<th>date</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody th:each="client : ${clients}">
+				<tr>
+					<td th:text="${client.id}"></td>
+					<td th:text="${client.name}"></td>
+					<td th:text="${client.lastName}"></td>
+					<td th:text="${client.email}"></td>
+					<td th:text="${#dates.format(client.createAt, 'yyyy-MM-dd')}"></td>
+					<td class="actions">
+						<a th:href="@{/form/} + ${client.id}" class="btn-edit" title="Edit">
+							<i class="fas fa-pencil-alt"></i>
+						</a>
+						<a th:href="@{/delete/} + ${client.id}" class="btn-delete" title="Delete">
+							<i class="fas fa-trash-alt"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<nav th:replace="paginator-nav :: paginator">
+		</nav>
 	</div>
 </body>
 </html>

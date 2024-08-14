@@ -2,57 +2,123 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-    <meta charset="UFT-8" />
-    <title th:text="${title}"></title>
+    <meta charset="UTF-8" />
+    <title th:text="${title}">Create User</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Springboot</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/list}">Clients</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
 
-    <h1 th:text="${title}"></h1>
-    <form th:action="@{/form}" th:object="${client}" method="post">
-        <table>
-             <tr>
-                <td>Name</td>
-                <td><input type="text" th:field="*{name}" th:errorclass="'form-control alert-danger'"/></td>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">This field can't be empty</small>
-            </tr>
-            <tr>
-                <td>Last Name</td>
-                <td><input type="text" th:field="*{lastName}" th:errorclass="'form-control alert-danger'"/></td>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">This field can't be empty </small>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td><input type="text" th:field="*{email}" th:errorclass="'form-control alert-danger'"/> </td>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">This field can't be empty</small>
-            </tr>
-            <tr>          
-                <td>Date</td>
-                <td><input type="text" th:field="*{createAt}" th:errorclass="'form-control alert-danger'" /> </td>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}">This fiel can't be empty</small>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Create client"/> </td>
-            </tr>
-        </table>
-        <input type="hidden" th:field="*{id}"/>
-    </form>
+        .container {
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #212529;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #212529;
+        }
+
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1rem;
+            color: #495057;
+        }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .form-control.alert-danger {
+            border-color: #dc3545;
+        }
+
+        .form-text.text-danger {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+
+        .btn-create {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-create:hover {
+            background-color: #343a40;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Create User</h1>
+        <form th:action="@{/form}" th:object="${client}" method="post">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Enter your name">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">This field
+                    can't be empty</small>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" th:field="*{lastName}" class="form-control" id="lastName"
+                    placeholder="Enter your last name">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('lastName')}"
+                    th:errors="*{lastName}">This field can't be empty </small>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Enter your email">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">This field
+                    can't be empty</small>
+            </div>
+            <div class="form-group">
+                <label for="createAt">Date</label>
+                <input type="date" th:field="*{createAt}" class="form-control" id="createAt" placeholder="mm/dd/yyyy">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('createAt')}"
+                    th:errors="*{createAt}">To save, the client must enter a correct date.</small>
+            </div>
+            <button type="submit" class="btn-create">Create User</button>
+        </form>
+    </div>
 </body>
+
 </html>
