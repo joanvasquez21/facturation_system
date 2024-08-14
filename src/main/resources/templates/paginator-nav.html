@@ -11,26 +11,24 @@
     <nav class="pagination-nav" th:fragment="paginator" style="display: flex; justify-content: center; padding: 10px 0;">
         <ul class="pagination" style="display: flex; list-style: none; padding-left: 0; margin: 0;">
             <li class="page-item" th:classappend="${page.first} ? 'disabled'" style="margin: 0 5px;">
-                <span class="page-link" th:if="${page.first}" style="color: #6c757d; background-color: #ffffff; border: 1px solid #dee2e6; padding: 6px 12px; border-radius: 4px;">Primero</span>
-                <a class="page-link" th:if="${not page.first}" th:href="@{${page.url}(page=0)}" style="color: #495057; background-color: #ffffff; border: 1px solid #000000; padding: 6px 12px; border-radius: 4px; text-decoration: none;">Primero</a>
+                <span class="page-link" th:if="${page.first}" style="color: #6c757d; background-color: #ffffff; border: 1px solid #dee2e6; padding: 6px 12px; border-radius: 4px;">First</span>
+                <a class="page-link" th:if="${not page.first}" th:href="@{${page.url}(page=0)}" style="color: #495057; background-color: #ffffff; border: 1px solid #000000; padding: 6px 12px; border-radius: 4px; text-decoration: none;">First</a>
             </li>
             <li class="page-item" th:classappend="${not page.hasPrevious} ? 'disabled'" style="margin: 0 5px;">
                 <span class="page-link" th:if="${not page.hasPrevious}" style="color: #6c757d; background-color: #ffffff; border: 1px solid #dee2e6; padding: 6px 12px; border-radius: 4px;">&lsaquo;</span>
                 <a class="page-link" th:if="${page.hasPrevious}" th:href="@{${page.url}(page=${page.pageCurrent-2})}" style="color: #495057; background-color: #ffffff; border: 1px solid #000000; padding: 6px 12px; border-radius: 4px; text-decoration: none;">&lsaquo;</a>
             </li>
-
             <li class="page-item" th:each="item : ${page.pages}" th:classappend="${item.isCurrent} ? 'active'" style="margin: 0 5px;">
                 <span class="page-link" th:if="${item.isCurrent}" th:text="${item.numberPages}" style="color: #fff; background-color: #000000; border: 1px solid #dee2e6; padding: 6px 12px; border-radius: 4px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);"></span>
                 <a class="page-link" th:if="${not item.isCurrent}" th:href="@{${page.url}(page=${item.numberPages-1})}" th:text="${item.numberPages}" style="color: #495057; background-color: #ffffff; border: 1px solid #000000; padding: 6px 12px; border-radius: 4px; text-decoration: none;"></a>
             </li>
-
             <li class="page-item" th:classappend="${not page.hasNext} ? 'disabled'" style="margin: 0 5px;">
                 <span class="page-link" th:if="${not page.hasNext}" style="color: #6c757d; background-color: #ffffff; border: 1px solid #dee2e6; padding: 6px 12px; border-radius: 4px;"> &rsaquo;</span>
                 <a class="page-link" th:if="${page.hasNext}" th:href="@{${page.url}(page=${page.pageCurrent})}" style="color: #495057; background-color: #ffffff; border: 1px solid #000000; padding: 6px 12px; border-radius: 4px; text-decoration: none;"> &rsaquo;</a>
             </li>
             <li class="page-item" th:classappend="${page.last} ? 'disabled'" style="margin: 0 5px;">
-                <span class="page-link" th:if="${page.last}" style="color: #6c757d; background-color: #ffffff; border: 1px solid #dee2e6; padding: 6px 12px; border-radius: 4px;">Último</span>
-                <a class="page-link" th:if="${not page.last}" th:href="@{${page.url}(page=${page.totalPages-1})}" style="color: #495057; background-color: #ffffff; border: 1px solid #000000; padding: 6px 12px; border-radius: 4px; text-decoration: none;">Último</a>
+                <span class="page-link" th:if="${page.last}" style="color: #6c757d; background-color: #ffffff; border: 1px solid #dee2e6; padding: 6px 12px; border-radius: 4px;">Last</span>
+                <a class="page-link" th:if="${not page.last}" th:href="@{${page.url}(page=${page.totalPages-1})}" style="color: #495057; background-color: #ffffff; border: 1px solid #000000; padding: 6px 12px; border-radius: 4px; text-decoration: none;">Last</a>
             </li>
         </ul>
     </nav>
