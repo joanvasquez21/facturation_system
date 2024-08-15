@@ -38,15 +38,17 @@ public class Invoice implements Serializable {
 
     @ManyToOne(fetch=FetchType.LAZY)
     private Client client;
+    
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "invoice_id")
+    public List<ItemInvoice> items;
+
+
 
     @PrePersist
     public void prePersist(){
         createAt  = new Date();
     }
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "invoice_id")
-    public List<ItemInvoice> items;
 
 
     public Invoice(){
@@ -105,5 +107,14 @@ public class Invoice implements Serializable {
         this.items.add(item);
     }
 
+    public Double getTotal(){
+        Double total = 0.0;
+
+        int size = items.size();
+        for(int i = 0 ; i < size; i++){
+            total = total + items.get(i).calculateImport();
+        }
+        return total;
+    }
 
 }
