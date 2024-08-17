@@ -90,7 +90,9 @@
 <body>
     <div class="container">
         <h1>Create User</h1>
-        <form th:action="@{/form}" th:object="${client}" method="post">
+    
+
+        <form th:action="@{/form}" th:object="${client}" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Enter your name">
@@ -116,9 +118,12 @@
                 <small class="form-text text-danger" th:if="${#fields.hasErrors('createAt')}"
                     th:errors="*{createAt}">To save, the client must enter a correct date.</small>
             </div>
+            <div class="form-group">
+                <label for="file">Photo</label>
+                <input type="file" name="file" class="form-control" id="photo">
+            </div>
             <button type="submit" class="btn-create">Create User</button>
         </form>
     </div>
 </body>
-
 </html>

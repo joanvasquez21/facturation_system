@@ -1,5 +1,9 @@
 package com.springboot.app.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,10 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @Controller
 @SessionAttributes("client")
@@ -29,6 +37,20 @@ public class ClientController {
 
 	@Autowired
 	private IClientService clientService;
+
+	@GetMapping(value="/see/{id}")
+	public String see(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
+		Client client = clientService.findOneClient(id);
+		if(client==null){
+			flash.addFlashAttribute("error", "The client does not exist");
+			return "redirect:/listClients";
+		}
+		model.put("client", client);
+		model.put("title", "Client detail: " + client.getName());
+
+		return "see";
+	}
+	
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String listClients(@RequestParam(name="page", defaultValue= "0") int page, Model model) {
@@ -65,10 +87,30 @@ public class ClientController {
 	}
 
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String save(@Valid Client client, BindingResult result, Model model, SessionStatus status) {
+	public String save(@Valid Client client, 
+						BindingResult result, 
+						Model model,
+					   @RequestParam("file") MultipartFile photo, 
+					   RedirectAttributes flash,
+					   SessionStatus status) {
 		if (result.hasErrors()) {
 			model.addAttribute("title", "Form client");
 			return "form";
+		}
+		if(!photo.isEmpty()){
+			Path directoryResources = Paths.get("src//main//resources//static//uploads");	
+			String rootPath = directoryResources.toFile().getAbsolutePath();
+			try {
+				byte[] bytes = photo.getBytes();
+				Path routeComplete = Paths.get(rootPath + "//" + photo.getOriginalFilename());
+				Files.write(routeComplete, bytes);
+				flash.addFlashAttribute("info", "You have successfully uploaded the photo");
+
+				client.setPhoto(photo.getOriginalFilename());
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		clientService.save(client);
 		status.setComplete();

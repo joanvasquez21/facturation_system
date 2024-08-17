@@ -54,6 +54,8 @@ import jakarta.persistence.Column;
 		@DateTimeFormat(pattern = "yyyy-MM-dd")
 		private Date createAt;
 
+		private String photo;
+
 		@OneToMany(mappedBy = "client" , fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval = true)
 		private List<Invoice> invoices;
 
@@ -102,6 +104,20 @@ import jakarta.persistence.Column;
 		public void setCreateAt(Date createAt) {
 			this.createAt = createAt;
 		}
+
+		
+
+		public String getPhoto() {
+			return photo;
+		}
+
+
+
+		public void setPhoto(String photo) {
+			this.photo = photo;
+		}
+
+
 
 		public List<Invoice> getInvoices() {
 			return this.invoices;

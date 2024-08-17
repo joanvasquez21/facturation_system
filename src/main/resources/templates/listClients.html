@@ -67,6 +67,11 @@
 </head>
 <body>
 	<div class="container">
+
+		<div th:if="${info}" class="alert alert-success" role="alert">
+			<p th:text="${info}"></p>
+		</div>
+		
 		<div style="display: flex; justify-content: space-between; align-items: center;">
 			<h2>Customer list and invoice creation</h2>
 			<a th:href="@{/form}" class="btn-create">Create user</a>
