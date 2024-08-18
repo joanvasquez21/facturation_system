@@ -89,7 +89,7 @@
 			</thead>
 			<tbody th:each="client : ${clients}">
 				<tr>
-					<td th:text="${client.id}"></td>
+					<td> <a th:href="@{/see/} + ${client.id}" th:text="${client.id}"></a></td>
 					<td th:text="${client.name}"></td>
 					<td th:text="${client.lastName}"></td>
 					<td th:text="${client.email}"></td>
