@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -98,14 +99,15 @@ public class ClientController {
 			return "form";
 		}
 		if(!photo.isEmpty()){
-			String rootPath = "C://Temp//uploads";
+
+			String uniqueFilename = UUID.randomUUID().toString() + "_" + photo.getOriginalFilename();
+			Path rootPath = Paths.get("uploads").resolve(uniqueFilename);
+			Path rootAbsolutePath = rootPath.toAbsolutePath();
 			try {
-				byte[] bytes = photo.getBytes();
-				Path routeComplete = Paths.get(rootPath + "//" + photo.getOriginalFilename());
-				Files.write(routeComplete, bytes);
+				Files.copy(photo.getInputStream(), rootAbsolutePath);
 				flash.addFlashAttribute("info", "You have successfully uploaded the photo");
 
-				client.setPhoto(photo.getOriginalFilename());
+				client.setPhoto(uniqueFilename);
 
 			} catch (IOException e) {
 				e.printStackTrace();
