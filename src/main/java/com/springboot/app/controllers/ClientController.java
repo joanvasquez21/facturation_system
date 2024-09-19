@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 
 import java.util.Map;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
@@ -51,7 +50,6 @@ public class ClientController {
 		try {
 			resource = uploadFileServiceImpl.load(filename);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -156,7 +154,6 @@ public class ClientController {
 
 			if (uploadFileServiceImpl.delete(client.getPhoto())) {
 				flash.addFlashAttribute("info", "Photo " + client.getPhoto() + "deleted successfully");
-
 			}
 		}
 
