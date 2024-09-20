@@ -62,6 +62,21 @@
 		.btn-create:hover {
 			background-color: #343a40;
 		}
+
+		/* Estilo personalizado para los números */
+		.number-box {
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			background-color: #000000;
+			color: white;
+			border-radius: 8px;
+			font-weight: bold;
+			text-decoration: none;
+		}
+
 	</style>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -89,7 +104,7 @@
 			</thead>
 			<tbody th:each="client : ${clients}">
 				<tr>
-					<td> <a th:href="@{/see/} + ${client.id}" th:text="${client.id}"></a></td>
+					<td> <a th:href="@{/see/} + ${client.id}" class="number-box" th:text="${client.id}"></a></td>
 					<td th:text="${client.name}"></td>
 					<td th:text="${client.lastName}"></td>
 					<td th:text="${client.email}"></td>
