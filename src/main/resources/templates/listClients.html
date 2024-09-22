@@ -99,6 +99,7 @@
 					<th>lastname</th>
 					<th>email</th>
 					<th>date</th>
+					<th>create invoice</th>
 					<th>actions</th>
 				</tr>
 			</thead>
@@ -109,6 +110,7 @@
 					<td th:text="${client.lastName}"></td>
 					<td th:text="${client.email}"></td>
 					<td th:text="${#dates.format(client.createAt, 'yyyy-MM-dd')}"></td>
+					<td><a class="btn btn-success btn-xs" th:href="@{'/invoice/form/' + ${client.id}}" th:text="'Create invoice'"></a></td>
 					<td class="actions">
 						<a th:href="@{/form/} + ${client.id}" class="btn-edit" title="Edit">
 							<i class="fas fa-pencil-alt"></i>
