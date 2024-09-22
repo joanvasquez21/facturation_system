@@ -2,7 +2,6 @@ package com.springboot.app.controllers;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springboot.app.models.entity.Client;
 import com.springboot.app.models.service.IClientService;
@@ -26,12 +30,6 @@ import com.springboot.app.models.service.UploadFileServiceImpl;
 import com.springboot.app.util.paginator.PageRender;
 
 import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @SessionAttributes("client")
@@ -65,18 +63,19 @@ public class ClientController {
 			flash.addFlashAttribute("error", "The client does not exist");
 			return "redirect:/listClients";
 		}
+		
 		model.put("client", client);
 		model.put("title", "Client detail: " + client.getName());
 
 		return "see";
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/listClients", method = RequestMethod.GET)
 	public String listClients(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 		Pageable pageRequest = PageRequest.of(page, 4);
 		Page<Client> clients = clientService.findAll(pageRequest);
 
-		PageRender<Client> pageRender = new PageRender<>("/list", clients);
+		PageRender<Client> pageRender = new PageRender<>("/listClients", clients);
 		model.addAttribute("title", "Client list");
 		model.addAttribute("clients", clients);
 		model.addAttribute("page", pageRender);
@@ -93,12 +92,17 @@ public class ClientController {
 	}
 
 	@RequestMapping(value = "/form/{id}", method = RequestMethod.GET)
-	public String edit(@PathVariable(value = "id") Long id, Map<String, Object> model) {
+	public String edit(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 		Client client = null;
 		if (id > 0) {
 			client = clientService.findOneClient(id);
+			if(client == null){
+				flash.addAttribute("error", "ID is not exists in db");
+				return "redirect:/listClient";
+			}
 		} else {
-			return "redirect:/list";
+			flash.addAttribute("error", "ID is not  valid");
+			return "redirect:/listClients";
 		}
 		model.put("client", client);
 		model.put("title", "Edit client");
@@ -128,19 +132,19 @@ public class ClientController {
 			try {
 				uniqueFileName = uploadFileServiceImpl.copy(photo);
 			} catch (IOException e) {
-
 				e.printStackTrace();
 			}
 
 			flash.addFlashAttribute("info", "You have successfully uploaded the photo");
 			client.setPhoto(uniqueFileName);
 		}
+
 		String messageFlash = (client.getId() != null) ? "The client has been edited successfully" : "The client has been created successfully";
 
 		clientService.save(client);
 		status.setComplete();
-		flash.addAttribute("success", messageFlash);
-		return "redirect:/list";
+		flash.addFlashAttribute("success", messageFlash);
+		return "redirect:/listClients";
 
 	}
 
@@ -157,6 +161,6 @@ public class ClientController {
 			}
 		}
 
-		return "redirect:/list";
+		return "redirect:/listClients";
 	}
 }

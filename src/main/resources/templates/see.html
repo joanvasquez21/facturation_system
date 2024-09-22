@@ -16,8 +16,9 @@
                         <li class="list-group-item" th:text="${client.createAt}"></li>
                     </ul>
                     <div th:if="${#lists.isEmpty(client.invoices)}" class="alert alert-info my-4" th:text="'There are no invoices assigned for client '+ ${client.name} + ' ' + ${client.lastName}"></div>
-                    <table th:if="${!#lists.isEmpty(client.invoices)}" class="table table-bordered table-striped my-4">
-                        <thead>
+
+                    <table th:if="${not #lists.isEmpty(client.invoices)}" class="table table-bordered table-striped my-4">
+                        <thead class="thead-inverse">
                             <tr>
                                 <th>Folio</th>
                                 <th>Description</th>

@@ -1,26 +1,26 @@
 	package com.springboot.app.models.entity;
 
 	import java.io.Serializable;
-	import java.util.ArrayList;
-	import java.util.Date;
-	import java.util.List;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-	import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-	import jakarta.persistence.Entity;
-	import jakarta.persistence.FetchType;
-	import jakarta.persistence.GeneratedValue;
-	import jakarta.persistence.GenerationType;
-	import jakarta.persistence.Id;
-	import jakarta.persistence.OneToMany;
-	import jakarta.persistence.Table;
-	import jakarta.persistence.Temporal;
-	import jakarta.persistence.TemporalType;
-	import jakarta.validation.constraints.Email;
-	import jakarta.validation.constraints.NotEmpty;
-	import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 	@Entity()
 	@Table(name = "clients")
@@ -54,7 +54,7 @@ import jakarta.persistence.Column;
 
 		private String photo;
 
-		@OneToMany(mappedBy = "client" , fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval = true)
+		@OneToMany(mappedBy = "client" , fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 		private List<Invoice> invoices;
 
 		public Client() {
@@ -125,8 +125,4 @@ import jakarta.persistence.Column;
 			this.invoices = invoices;
 		}
 
-		//Guarda factura de uno en uno
-		public void addInvoice(Invoice invoice) {
-
-		}
 	}
