@@ -13,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.springboot.app.models.entity.Client;
 import com.springboot.app.models.entity.Invoice;
 import com.springboot.app.models.service.IClientService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/invoice")
@@ -38,5 +40,11 @@ public class InvoiceController {
 	model.put("title", "Create invoice");
 		return "invoice/form";
 	}
+
+	@GetMapping("/search-product/{term}")
+	public String getMethodName(@RequestParam String param) {
+		return new String();
+	}
+	
 
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.springboot.app.models.entity.Client;
+import com.springboot.app.models.entity.Product;
 
 public interface IClientService {
 
@@ -18,6 +19,8 @@ public interface IClientService {
     public Client findOneClient(Long id);
 
     public void deleteClient(Long id);
+
+    public List<Product> findByName(String term);
 
     
 }
