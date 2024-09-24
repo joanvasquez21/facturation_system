@@ -30,7 +30,14 @@
           },
           select: function(event, ui) {
               console.log("Selected item: ", ui.item);
-              $("#search_product").val(ui.item.label);  
+            //  $("#search_product").val(ui.item.label);  
+            let line = $("#templateItemsInvoice").html();
+            line = line.replace(/{ID}/g, ui.item.value);
+            line = line.replace(/{NAME}/g, ui.item.label);
+            line = line.replace(/{PRICE}/g, ui.item.price);
+
+            $("#uploadItemProducts tbody").append(line);
+            itemsHelper.calculateImport(ui.item.value, ui.item.price, 1);
               return false;  
           },
           focus: function(event, ui) {
@@ -39,6 +46,12 @@
           }
       });
     })
+
+    let itemsHelper = {
+      calculateImport: function(id, price, quantity){
+        $("#total_import_" + id).html(parseInt(price) * parseInt(quantity)); 
+      }
+    };
   </script>  
 </body>
 </html>
