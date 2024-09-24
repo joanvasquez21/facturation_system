@@ -1,32 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <body>
   <script type="text/javascript" th:fragment="javascript">
-    $('document').ready(function(){
+
+    $(document).ready(function(){
+      console.log("Document is ready");
+
+   
       $("#search_product").autocomplete({
-        source: function(request, response){
-            $.ajax({
-                url:"/invoice/search-products/" + request.term,
+          source: function(request, response) {
+              console.log("Search term: ", request.term);
+
+              $.ajax({
+                url: "/invoice/upload-products", 
                 dataType: "json",
                 data: {
-                    term: request.term
+                    term: request.term 
                 },
-                success: function(data){
-                    response($.map(data, function(item){
+                success: function(data) {
+                    response($.map(data, function(item) {
                         return {
-                            value: item.id,
-                            label: item.name,
+                            label: item.name, 
+                            value: item.id,  
                             price: item.price
-                        }
-                    }))
-                },
-            })
-        },
-        select: function(event, ui){
-            $("search_product").val(ui.item.label);
-            return false;
-        }
-      })  
+                        };
+                    }));
+                }
+            });
+          },
+          select: function(event, ui) {
+              console.log("Selected item: ", ui.item);
+              $("#search_product").val(ui.item.label);  
+              return false;  
+          },
+          focus: function(event, ui) {
+              $("#search_product").val(ui.item.label);
+              return false;
+          }
+      });
     })
   </script>  
 </body>

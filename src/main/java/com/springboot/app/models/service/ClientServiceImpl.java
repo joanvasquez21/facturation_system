@@ -57,6 +57,4 @@ public class ClientServiceImpl implements IClientService{
         return productDao.findByName(term);    
     }
 
-    
-
 }
