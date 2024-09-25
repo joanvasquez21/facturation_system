@@ -46,10 +46,14 @@ public class ItemInvoice implements Serializable {
         return product;
     }
 
-    public Double calculateImport() {
-        return quantity.doubleValue() * product.getPrice();
-
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
+    public Double calculateImport() {
+        return quantity.doubleValue() * product.getPrice();
+    }
+
+    
 
 }

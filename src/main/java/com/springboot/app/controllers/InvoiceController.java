@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springboot.app.models.entity.Client;
 import com.springboot.app.models.entity.Invoice;
+import com.springboot.app.models.entity.ItemInvoice;
 import com.springboot.app.models.entity.Product;
 import com.springboot.app.models.service.IClientService;
 
@@ -47,6 +49,23 @@ public class InvoiceController {
 	@GetMapping(value= "/upload-products", produces={"application/json"})
 	public @ResponseBody List<Product> uploadProducts(@RequestParam String term) {
 		return clientServiceImpl.findByName(term);
+	}
+
+	@PostMapping("/form")
+	public String save(Invoice invoice, 
+					@RequestParam(name="item_id[]", required=false) Long[] itemId, 
+					@RequestParam(name="quantity[]", required=false) Integer[] quantity,
+					RedirectAttributes flash){
+
+		for(int i = 0; i< itemId.length; i++){
+			Product product = clientServiceImpl.findProductById(itemId[i]);
+
+			ItemInvoice line = new ItemInvoice();
+			line.setQuantity(quantity[i]);
+			line.setProduct(product);
+		}
+
+		return "";
 	}
 
 	
