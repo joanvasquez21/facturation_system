@@ -43,15 +43,15 @@
 
             $("#uploadItemProducts tbody").append(line);
             itemsHelper.calculateImport(ui.item.value, ui.item.price, 1);
-              return false;  
-          },
-          focus: function(event, ui) {
-              $("#search_product").val(ui.item.label);
               return false;
           }
-      });
-    })
-
+          });
+          
+    $("form").submit(function(){
+      $("#templateItemsInvoice").remove();
+      return;
+    });
+  });
     let itemsHelper = {
       calculateImport: function(id, price, quantity){
         $("#total_import_" + id).html(parseInt(price) * parseInt(quantity)); 

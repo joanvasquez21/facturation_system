@@ -3,6 +3,8 @@ package com.springboot.app.controllers;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springboot.app.models.entity.Client;
@@ -25,9 +28,11 @@ import com.springboot.app.models.service.IClientService;
 @RequestMapping("/invoice")
 @SessionAttributes("invoice")
 public class InvoiceController {
-	
+
 	@Autowired
 	private IClientService clientServiceImpl; 
+
+	private final Logger log = LoggerFactory.getLogger(InvoiceController.class);
 	
 	@GetMapping("/form/{clientId}")
 	public String create(@PathVariable(value="clientId") Long clientId,
@@ -55,17 +60,22 @@ public class InvoiceController {
 	public String save(Invoice invoice, 
 					@RequestParam(name="item_id[]", required=false) Long[] itemId, 
 					@RequestParam(name="quantity[]", required=false) Integer[] quantity,
-					RedirectAttributes flash){
-
-		for(int i = 0; i< itemId.length; i++){
-			Product product = clientServiceImpl.findProductById(itemId[i]);
-
+					RedirectAttributes flash,
+					SessionStatus status){
+		for(int i = 0; i<itemId.length; i++){
+			Product productId = clientServiceImpl.findProductById(itemId[i]);
 			ItemInvoice line = new ItemInvoice();
 			line.setQuantity(quantity[i]);
-			line.setProduct(product);
-		}
+			line.setProduct(productId);
+			invoice.addItemInvoice(line);
 
-		return "";
+			log.info("Id:" + itemId[i].toString() + "quantity:" + quantity[i]);
+		}
+		clientServiceImpl.saveInvoice(invoice);
+		status.setComplete();
+		flash.addFlashAttribute("success", "Invoice create successfully");
+	
+		return "redirect:/see/" + invoice.getClient().getId();
 	}
 
 	
