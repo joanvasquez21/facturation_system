@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,8 @@ import com.springboot.app.models.entity.Invoice;
 import com.springboot.app.models.entity.ItemInvoice;
 import com.springboot.app.models.entity.Product;
 import com.springboot.app.models.service.IClientService;
+
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -57,11 +61,22 @@ public class InvoiceController {
 	}
 
 	@PostMapping("/form")
-	public String save(Invoice invoice, 
+	public String save(@Valid Invoice invoice, 
+					BindingResult result,
+					Model model,
 					@RequestParam(name="item_id[]", required=false) Long[] itemId, 
 					@RequestParam(name="quantity[]", required=false) Integer[] quantity,
 					RedirectAttributes flash,
 					SessionStatus status){
+						if(result.hasErrors()){
+							model.addAttribute("title", "Create invoice");
+							return "invoice/form";
+						}
+						if(itemId == null || itemId.length == 0){
+							model.addAttribute("title", "Create invoice");
+							model.addAttribute("error", "You must have at least one searched product");
+							return "invoice/form";
+						}
 		for(int i = 0; i<itemId.length; i++){
 			Product productId = clientServiceImpl.findProductById(itemId[i]);
 			ItemInvoice line = new ItemInvoice();
