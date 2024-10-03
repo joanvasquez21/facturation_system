@@ -37,6 +37,20 @@ public class InvoiceController {
 	private IClientService clientServiceImpl; 
 
 	private final Logger log = LoggerFactory.getLogger(InvoiceController.class);
+
+	@GetMapping("/see/{id}")
+	public String getMethodName(@PathVariable Long id, Model model, RedirectAttributes flash) {
+			Invoice invoice = clientServiceImpl.findInvoiceById(id);
+			if(invoice == null){
+				flash.addFlashAttribute("error", "Invoice is not exist in database");
+				return "redirect:/listClients";
+			}
+			model.addAttribute("invoice", invoice);
+			model.addAttribute("title", "Invoice: ".concat(invoice.getDescription()));
+
+		return "invoice/see";
+	}
+	
 	
 	@GetMapping("/form/{clientId}")
 	public String create(@PathVariable(value="clientId") Long clientId,
