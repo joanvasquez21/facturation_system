@@ -43,6 +43,16 @@
                 </tbody>
             </table>
             <h5 class="float-right">Grand total: <span th:text="${invoice.total}" class="badge badge-secondary"></span> </h5>
+            <div class="card border-info mb-4" style="max-width: 20rem;">
+                <div class="card-header">Observations</div>
+                <div class="card-body">
+                    <p class="card-text" th:text="${invoice.observation}" th:if="${not #strings.isEmpty(invoice.observation)}"></p>
+                    <h4 class="card-text" th:if="${ #strings.isEmpty(invoice.observation)}" th:text="'has no observation'"></h4>
+                </div>
+            </div>
+            <a th:href="@{'/see/' + ${invoice.client.id}}" 
+                class="btn btn-light btn-xs"
+            > &laquo; volver</a>
         </div>
     </div>
     <footer th:replace="layout/layout :: footer"></footer>
