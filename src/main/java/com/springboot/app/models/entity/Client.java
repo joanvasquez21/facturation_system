@@ -125,4 +125,12 @@ import jakarta.validation.constraints.NotNull;
 			this.invoices = invoices;
 		}
 
+
+
+		@Override
+		public String toString() {
+			return "Client [name=" + name + ", lastName=" + lastName + "]";
+		}
+		
+
 	}

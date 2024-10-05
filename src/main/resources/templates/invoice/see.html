@@ -1,11 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout/layout :: head"></head>
 <body>
-    
+    <header th:replace="layout/layout :: header"></header>
+    <div class="container py-4">
+        <div class="card bg-light">
+            <div class="card-header" th:text="${title}"></div>
+            <div class="card-body">
+
+            </div>
+            <h4 class="card-title">
+                <a th:href="@{'/see/' + ${invoice.client.id}}" class="btn btn-light btn-xs">&laquo; volver</a>
+            </h4>
+            <ul class="list-group my-2">
+                <li class="list-group-item list-group-item-primary" th:text="'Customer data'"></li>
+                <li class="list-group-item" th:text="${invoice.client}"></li>
+                <li class="list-group-item" th:text="${invoice.client.email}"></li>       
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" th:text="'Invoice data'"></li>
+                <li class="list-group-item" th:text="'Document: ' + ${invoice.id}"></li>
+                <li class="list-group-item" th:text="'Description: ' + ${invoice.description}"></li>
+                <li class="list-group-item" th:text="'Date: ' + ${invoice.createAt}"></li>
+            </ul>
+        </div>
+    </div>
+    <footer th:replace="layout/layout :: footer"></footer>
 </body>
 </html>
