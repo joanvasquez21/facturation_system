@@ -129,7 +129,7 @@ import jakarta.validation.constraints.NotNull;
 
 		@Override
 		public String toString() {
-			return "Client [name=" + name + ", lastName=" + lastName + "]";
+			return "Client: " + name + " " + lastName + " ";
 		}
 		
 
