@@ -11,7 +11,7 @@
                 <h4 class="card-title">
                     <a class="btn btn-light btn-xs" th:href="@{'/see/' + ${invoice.client.id}}" th:text="'&laquo; preview'"></a>
                 </h4>
-                <form th:action="@{/invoice/form/}" th:object="${invoice}" method="post">
+                <form th:action="@{/invoice/form}" th:object="${invoice}" method="post">
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label" th:text="'Client'"></label>
                         <div class="col-sm-6">
@@ -54,10 +54,9 @@
                             </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
-                    <h5><span class="badge badge-secondary" id="gran_total">0</span></h5>
+                    <h5><span class="badge badge-secondary" id="gran_total"> Total: 0</span></h5>
 
                     <div class="form-group row">
                         <div class="col-sm-6">

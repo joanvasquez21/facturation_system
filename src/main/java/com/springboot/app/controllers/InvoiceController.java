@@ -82,6 +82,10 @@ public class InvoiceController {
 					@RequestParam(name="quantity[]", required=false) Integer[] quantity,
 					RedirectAttributes flash,
 					SessionStatus status){
+
+						log.info("Starting to process the form submission for invoice...");
+
+						
 						if(result.hasErrors()){
 							model.addAttribute("title", "Create invoice");
 							return "invoice/form";

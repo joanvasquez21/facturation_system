@@ -60,7 +60,7 @@
       hasProduct: function(id){
         
         let result = false;
-        $('input[name=item_id[]]').each( function (){
+        $('input[name="item_id[]"]').each( function (){
           if(parseInt(id) == parseInt($(this).val())){
             result = true; 
           }
