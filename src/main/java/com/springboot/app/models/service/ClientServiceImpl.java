@@ -81,6 +81,9 @@ public class ClientServiceImpl implements IClientService{
         return invoiceDao.findById(id).orElse(null);
     }
 
-    
-
+    @Override
+    @Transactional
+    public void deleteInvoice(Long id) {
+        invoiceDao.deleteById(id);
+    }
 }

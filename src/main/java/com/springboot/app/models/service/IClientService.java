@@ -29,4 +29,6 @@ public interface IClientService {
 
     public Invoice findInvoiceById(Long id);
     
+    public void deleteInvoice(Long id);
+    
 }
