@@ -1,20 +1,22 @@
+# Ignorar el archivo de ayuda
 HELP.md
+
+# Ignorar la carpeta target donde se generan los archivos compilados
 target/
-!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+### STS (Spring Tool Suite) ###
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -31,3 +33,23 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Maven Wrapper - Solo mantener el jar necesario
+.mvn/wrapper/maven-wrapper.jar
+
+# Ignorar archivos de logs y temporales
+*.log
+*.tmp
+*.bak
+
+# Ignorar binarios y compilados de Java
+*.class
+
+# Ignorar archivos generados de backup o temporales
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Ignorar archivos de sistema
+Thumbs.db
