@@ -53,3 +53,13 @@ build/
 
 # Ignorar archivos de sistema
 Thumbs.db
+# Ignorar archivos de Maven Wrapper
+.mvn/
+mvnw
+mvnw.cmd
+
+# Ignorar otros archivos que no quieres rastrear
+*.log
+*.class
+*.jar
+*.war
